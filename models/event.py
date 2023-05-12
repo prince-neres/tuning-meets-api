@@ -1,10 +1,9 @@
 from typing import Optional, Any
 from beanie import Document
 from pydantic import BaseModel
-from datetime import date
 
 
-class Adress(Document):
+class Adress(BaseModel):
     number: int
     complement: str
     neighborhood: str
@@ -33,9 +32,9 @@ class Event(Document):
     adress: Adress
     latitude: float
     longitude: float
-    date_created: date
-    date_updated: date
-    date_expected: Adress
+    date_created: str
+    date_updated: str
+    date_expected: str
 
     class Collection:
         name = "events"
@@ -57,9 +56,9 @@ class Event(Document):
                 },
                 "latitude": -15.7942287,
                 "longitude": -47.8821658,
-                "date_created": "2023-05-11 21:32:16.349849",
-                "date_updated": "2023-05-11 21:32:16.349849",
-                "date_expected": "2023-05-11 21:32:16.349849",
+                "date_created": "2023-05-11T21:32:16.349849",
+                "date_updated": "2023-05-11T21:32:16.349849",
+                "date_expected": "2023-05-11T21:32:16.349849",
             }
         }
 
@@ -71,9 +70,9 @@ class UpdateEventModel(BaseModel):
     adress: Optional[Adress]
     latitude: Optional[float]
     longitude: Optional[float]
-    date_created: Optional[date]
-    date_updated: Optional[date]
-    date_expected: Optional[date]
+    date_created: Optional[str]
+    date_updated: Optional[str]
+    date_expected: Optional[str]
 
     class Config:
         schema_extra = {
@@ -92,9 +91,9 @@ class UpdateEventModel(BaseModel):
                 },
                 "latitude": -15.7942287,
                 "longitude": -47.8821658,
-                "date_created": "2023-05-11 21:32:16.349849",
-                "date_updated": "2023-05-11 21:32:16.349849",
-                "date_expected": "2023-05-11 21:32:16.349849",
+                "date_created": "2023-05-11T21:32:16.349849",
+                "date_updated": "2023-05-11T21:32:16.349849",
+                "date_expected": "2023-05-11T21:32:16.349849",
             }
         }
 
