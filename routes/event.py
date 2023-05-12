@@ -1,8 +1,9 @@
-from fastapi import APIRouter, Body
-
+from fastapi import APIRouter, Body, Depends
+from auth.jwt_bearer import JWTBearer
 from database.database import *
 from models.event import *
 
+token_listener = JWTBearer()
 router = APIRouter()
 
 
@@ -34,7 +35,7 @@ async def get_event_data(id: PydanticObjectId):
     }
 
 
-@router.post("/", response_description="Event data added into the database", response_model=Response)
+@router.post("/", response_description="Event data added into the database", response_model=Response, dependencies=[Depends(token_listener)])
 async def add_event_data(event: Event = Body(...)):
     new_event = await add_event(event)
     return {
@@ -63,7 +64,7 @@ async def delete_event_data(id: PydanticObjectId):
     }
 
 
-@router.put("/{id}", response_model=Response)
+@router.put("/{id}", response_model=Response, dependencies=[Depends(token_listener)])
 async def update_event(id: PydanticObjectId, req: UpdateEventModel = Body(...)):
     updated_event = await update_event_data(id, req.dict())
     if updated_event:

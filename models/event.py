@@ -42,9 +42,11 @@ class Event(Document):
     class Config:
         schema_extra = {
             "example": {
-                "title": "fgsdfgsdfgsdfgsdf",
-                "description": "sfdgdf gsdfg sdfgsdfgsdfgsdf",
-                "image": "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.mentecoletiva.com.br%2Ftop-10-carros-japoneses-jdm-cars%2F&psig=AOvVaw1SGGe7mag6PoI-YEb2HRuY&ust=1683938198782000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCKiCo-PE7v4CFQAAAAAdAAAAABAE",
+                "title": "TESTE",
+                "description": "TESTE",
+                "image": "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.mentecoletiva.com.br%2Ftop-10-carros"
+                         "-japoneses-jdm-cars%2F&psig=AOvVaw1SGGe7mag6PoI-YEb2HRuY&ust=1683938198782000&source=images"
+                         "&cd=vfe&ved=0CBEQjRxqFwoTCKiCo-PE7v4CFQAAAAAdAAAAABAE",
                 "adress": {
                     "street": "L2 Norte",
                     "number": 1000,
@@ -77,9 +79,11 @@ class UpdateEventModel(BaseModel):
     class Config:
         schema_extra = {
             "example": {
-                "title": "fgsdfgsdfgsdfgsdf",
-                "description": "sfdgdf gsdfg sdfgsdfgsdfgsdf",
-                "image": "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.mentecoletiva.com.br%2Ftop-10-carros-japoneses-jdm-cars%2F&psig=AOvVaw1SGGe7mag6PoI-YEb2HRuY&ust=1683938198782000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCKiCo-PE7v4CFQAAAAAdAAAAABAE",
+                "title": "TESTE",
+                "description": "TESTE",
+                "image": "https://www.google.com/url?sa=i&url=http%3A%2F%2Fwww.mentecoletiva.com.br%2Ftop-10-carros"
+                         "-japoneses-jdm-cars%2F&psig=AOvVaw1SGGe7mag6PoI-YEb2HRuY&ust=1683938198782000&source=images"
+                         "&cd=vfe&ved=0CBEQjRxqFwoTCKiCo-PE7v4CFQAAAAAdAAAAABAE",
                 "adress": {
                     "street": "L2 Norte",
                     "number": 1000,
