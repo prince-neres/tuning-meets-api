@@ -5,7 +5,7 @@ from pydantic import BaseModel, EmailStr
 
 
 class Admin(Document):
-    username: str
+    fullname: str
     email:  EmailStr
     password: str
     date_created: Optional[str]
@@ -17,7 +17,7 @@ class Admin(Document):
     class Config:
         schema_extra = {
             "example": {
-                "username": "Abdulazeez Abdulazeez Adeshina",
+                "fullname": "Abdulazeez Abdulazeez Adeshina",
                 "email": "abdul@youngest.dev",
                 "password": "3xt3m#",
                 "date_created": "2023-05-11T21:32:16.349849",
@@ -37,7 +37,7 @@ class AdminSignIn(HTTPBasicCredentials):
 
 
 class AdminData(BaseModel):
-    username: str
+    fullname: str
     email: EmailStr
     date_created: str
     date_updated: str
@@ -45,7 +45,7 @@ class AdminData(BaseModel):
     class Config:
         schema_extra = {
             "example": {
-                "username": "Abdulazeez Abdulazeez Adeshina",
+                "fullname": "Abdulazeez Abdulazeez Adeshina",
                 "email": "abdul@youngest.dev",
                 "date_created": "2023-05-11T21:32:16.349849",
                 "date_updated": "2023-05-11T21:32:16.349849",
