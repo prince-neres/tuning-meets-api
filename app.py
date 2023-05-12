@@ -1,9 +1,8 @@
 from fastapi import FastAPI, Depends
-
 from auth.jwt_bearer import JWTBearer
 from config.config import initiate_database
 from routes.admin import router as AdminRouter
-from routes.student import router as StudentRouter
+from routes.event import router as EventRouter
 
 app = FastAPI()
 
@@ -21,4 +20,5 @@ async def read_root():
 
 
 app.include_router(AdminRouter, tags=["Administrator"], prefix="/admin")
-app.include_router(StudentRouter, tags=["Students"], prefix="/student", dependencies=[Depends(token_listener)])
+app.include_router(EventRouter, tags=[
+                   "Events"], prefix="/event", dependencies=[Depends(token_listener)])

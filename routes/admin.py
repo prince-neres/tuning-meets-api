@@ -30,7 +30,7 @@ async def admin_login(admin_credentials: AdminSignIn = Body(...)):
     )
 
 
-@router.post("/new", response_model=AdminData)
+@router.post("/register", response_model=AdminData)
 async def admin_signup(admin: Admin = Body(...)):
     admin_exists = await Admin.find_one(Admin.email == admin.email)
     if admin_exists:
