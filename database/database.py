@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import List, Union
 
 from beanie import PydanticObjectId
@@ -10,6 +11,8 @@ event_collection = Event
 
 
 async def add_admin(new_admin: Admin) -> Admin:
+    new_admin.date_created = str(datetime.now())
+    new_admin.date_updated = str(datetime.now())
     admin = await new_admin.create()
     return admin
 
