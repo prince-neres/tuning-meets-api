@@ -1,4 +1,5 @@
 from typing import Optional
+from boto3 import client
 
 from beanie import init_beanie
 from motor.motor_asyncio import AsyncIOMotorClient
@@ -11,6 +12,12 @@ from models.event import Event
 class Settings(BaseSettings):
     # database configurations
     DATABASE_URL: Optional[str] = None
+
+    # AWS S3 configurations
+    AWS_ACCESS_KEY_ID: Optional[str] = None
+    AWS_SECRET_ACCESS_KEY: Optional[str] = None
+    AWS_S3_CUSTOM_DOMAIN: Optional[str] = None
+    AWS_BUCKET_NAME: Optional[str] = None
 
     # JWT
     secret_key: str

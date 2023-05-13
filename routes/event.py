@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Body, Depends
+from fastapi import APIRouter, Body, Depends, UploadFile, File, Request
 from auth.jwt_bearer import JWTBearer
 from database.database import *
 from models.event import *
+from services import s3_image_upload
 
 token_listener = JWTBearer()
 router = APIRouter()
@@ -36,8 +37,13 @@ async def get_event_data(id: PydanticObjectId):
 
 
 @router.post("/", response_description="Event data added into the database", response_model=Response, dependencies=[Depends(token_listener)])
-async def add_event_data(event: Event = Body(...)):
+async def add_event_data(event: Event = Body(...), image: UploadFile = File(...)):
+    if image.filename:
+        url = s3_image_upload(image)
+        event.image = url
+
     new_event = await add_event(event)
+
     return {
         "status_code": 200,
         "response_type": "success",

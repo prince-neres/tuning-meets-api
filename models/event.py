@@ -1,9 +1,11 @@
 from typing import Optional, Any
 from beanie import Document
 from pydantic import BaseModel
+import json
 
 
 class Adress(BaseModel):
+    street: str
     number: int
     complement: str
     neighborhood: str
@@ -28,13 +30,23 @@ class Adress(BaseModel):
 class Event(Document):
     title: str
     description: str
-    image: str
+    image: Optional[str]
     adress: Adress
     latitude: float
     longitude: float
-    date_created: str
-    date_updated: str
+    date_created: Optional[str]
+    date_updated: Optional[str]
     date_expected: str
+
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate_to_json
+
+    @classmethod
+    def validate_to_json(cls, value):
+        if isinstance(value, str):
+            return cls(**json.loads(value))
+        return value
 
     class Collection:
         name = "events"

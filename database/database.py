@@ -23,6 +23,8 @@ async def retrieve_events() -> List[Event]:
 
 
 async def add_event(new_event: Event) -> Event:
+    new_event.date_created = str(datetime.now())
+    new_event.date_updated = str(datetime.now())
     event = await new_event.create()
     return event
 
