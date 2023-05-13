@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Body, Depends, UploadFile, File, Request
+from fastapi import APIRouter, Body, Depends, UploadFile, File
 from auth.jwt_bearer import JWTBearer
 from database.database import *
 from models.event import *
@@ -71,8 +71,12 @@ async def delete_event_data(id: PydanticObjectId):
 
 
 @router.put("/{id}", response_model=Response, dependencies=[Depends(token_listener)])
-async def update_event(id: PydanticObjectId, req: UpdateEventModel = Body(...)):
-    updated_event = await update_event_data(id, req.dict())
+async def update_event(id: PydanticObjectId, event: UpdateEventModel = Body(...), image: UploadFile = File(...)):
+    if image.filename:
+        url = s3_image_upload(image)
+        event.image = url
+
+    updated_event = await update_event_data(id, event.dict())
     if updated_event:
         return {
             "status_code": 200,
