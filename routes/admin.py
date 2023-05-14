@@ -3,7 +3,7 @@ from passlib.context import CryptContext
 
 from auth.jwt_handler import sign_jwt
 from database.database import add_admin
-from models.admin import Admin, AdminData, AdminSignIn
+from models.admin import Admin, AdminSignIn
 
 router = APIRouter()
 
@@ -14,10 +14,20 @@ hash_helper = CryptContext(schemes=["bcrypt"])
 async def admin_login(admin_credentials: AdminSignIn = Body(...)):
     admin_exists = await Admin.find_one(Admin.email == admin_credentials.username)
     if admin_exists:
-        password = hash_helper.verify(
+        correct_password = hash_helper.verify(
             admin_credentials.password, admin_exists.password)
-        if password:
-            return sign_jwt(admin_credentials.username)
+        if correct_password:
+            admin = await Admin.find_one(Admin.email == admin_credentials.username)
+            token = sign_jwt(admin_credentials.username)
+            del admin.password
+
+            return {
+                "status_code": 202,
+                "response_type": "success",
+                "description": "Login successfully",
+                "token": token.get('access_token'),
+                "admin": admin
+            }
 
         raise HTTPException(
             status_code=403,
@@ -30,7 +40,7 @@ async def admin_login(admin_credentials: AdminSignIn = Body(...)):
     )
 
 
-@router.post("/register", response_model=AdminData)
+@router.post("/register")
 async def admin_signup(admin: Admin = Body(...)):
     admin_exists = await Admin.find_one(Admin.email == admin.email)
     if admin_exists:
@@ -41,4 +51,9 @@ async def admin_signup(admin: Admin = Body(...)):
 
     admin.password = hash_helper.encrypt(admin.password)
     new_admin = await add_admin(admin)
-    return new_admin
+    return {
+        "status_code": 201,
+        "response_type": "success",
+        "description": "Admin registered successfully",
+        "admin": new_admin
+    }
