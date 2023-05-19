@@ -22,16 +22,12 @@ async def admin_login(admin_credentials: AdminSignIn = Body(...)):
             del admin.password
 
             return {
-                "status_code": 202,
-                "response_type": "success",
-                "description": "Login successfully",
-                "admin": {
-                    "token": token.get('access_token'),
-                    "fullname": admin.fullname,
-                    "email": admin.email,
-                    "date_created": admin.date_created,
-                    "date_updated": admin.date_updated,
-                }
+                "token": token.get('access_token'),
+                "fullname": admin.fullname,
+                "email": admin.email,
+                "date_created": admin.date_created,
+                "date_updated": admin.date_updated,
+
             }
 
         raise HTTPException(
@@ -58,14 +54,9 @@ async def admin_signup(admin: Admin = Body(...)):
     new_admin = await add_admin(admin)
     token = sign_jwt(new_admin.email)
     return {
-        "status_code": 201,
-        "response_type": "success",
-        "description": "Admin successfully created",
-        "admin": {
-            "token": token.get('access_token'),
-            "fullname": new_admin.fullname,
-            "email": new_admin.email,
-            "date_created": new_admin.date_created,
-            "date_updated": new_admin.date_updated,
-        }
+        "token": token.get('access_token'),
+        "fullname": new_admin.fullname,
+        "email": new_admin.email,
+        "date_created": new_admin.date_created,
+        "date_updated": new_admin.date_updated,
     }
