@@ -8,9 +8,9 @@ token_listener = JWTBearer()
 router = APIRouter()
 
 
-@router.get("/", response_description="Events retrieved", response_model=Event)
-async def get_events():
-    events = await retrieve_events()
+@router.get("/", response_description="Events retrieved", response_model=List[Event])
+async def get_events(q: str = ""):
+    events = await retrieve_events(q)
     return events
 
 

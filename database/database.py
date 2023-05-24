@@ -17,8 +17,17 @@ async def add_admin(new_admin: Admin) -> Admin:
     return admin
 
 
-async def retrieve_events() -> List[Event]:
-    events = await event_collection.all().to_list()
+async def retrieve_events(q: str) -> List[Event]:
+    query = {}
+
+    if q:
+        query["$or"] = [
+            {"title": {"$regex": q}},
+            {"description": {"$regex": q}},
+            {"date_expected": {"$regex": q}},
+        ]
+
+    events = await event_collection.find(query).to_list(length=None)
     return events
 
 
